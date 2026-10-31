@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important} body{margin:0} img{max-width:100%}</style>
+<title>CLIFF Website</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: sticky paper header with tab rail; one Lucy-blue band for the carousel; content in a 1120px column; term-card date blocks recur across every event listing. */
+:root {
+  --paper: #f5f6fa;
+  --surface: #ffffff;
+  --ink: #141a3a;
+  --muted: #545c7c;
+  --rule: #d9dcea;
+  --lucy: #1b2a6b;
+  --lucy-deep: #121b4a;
+  --sky: #6b9fbf;
+  --gold: #c98a1c;
+  --gold-soft: #f2d9a8;
+  --link: #22348c;
+  --placeholder-bg: #eef0f7;
+  --on-band: #ffffff;
+  --on-band-muted: #c6cde6;
+  --logo-red: #df2449;
+  --logo-orange: #e8822a;
+  --logo-green: #3f8f3a;
+  --logo-light: block;
+  --logo-dark: none;
+  --display: "Crimson Pro", Georgia, "Times New Roman", serif;
+  --serif: "Crimson Pro", Georgia, "Times New Roman", serif;
+  --sans: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
+  --measure: 66ch;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0d1230; --surface: #151c42; --ink: #e8ebf7; --muted: #a6aecb; --rule: #2a3363;
+    --lucy: #1b2a6b; --lucy-deep: #0a0f2a; --sky: #8bb8d4; --gold: #e3a94a; --gold-soft: #4a3a1c;
+    --link: #a9bdf2; --placeholder-bg: #1a2250; --on-band: #ffffff; --on-band-muted: #c6cde6;
+    --logo-light: none; --logo-dark: block; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0d1230; --surface: #151c42; --ink: #e8ebf7; --muted: #a6aecb; --rule: #2a3363;
+  --lucy: #1b2a6b; --lucy-deep: #0a0f2a; --sky: #8bb8d4; --gold: #e3a94a; --gold-soft: #4a3a1c;
+  --link: #a9bdf2; --placeholder-bg: #1a2250; --on-band: #ffffff; --on-band-muted: #c6cde6;
+  --logo-light: none; --logo-dark: block; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.65; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+a { color: var(--link); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+h1, h2, h3 { text-wrap: balance; color: var(--ink); }
+h1 { font-family: var(--display); font-weight: 500; font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.08; margin: 0; letter-spacing: -0.01em; }
+h2 { font-family: var(--display); font-weight: 500; font-size: clamp(1.7rem, 3.4vw, 2.3rem); line-height: 1.15; margin: 0; }
+h3 { font-family: var(--serif); font-weight: 600; font-size: 1.3rem; line-height: 1.3; margin: 0; }
+p { margin: 0; }
+.eyebrow { font-family: var(--sans); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.prose { max-width: var(--measure); display: grid; gap: 1em; }
+.prose p { color: var(--ink); }
+.lede { font-family: var(--serif); font-size: 1.3rem; line-height: 1.55; }
+.muted { color: var(--muted); }
+
+/* Header */
+.site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--surface); border-bottom: 1px solid var(--rule); }
+.tricolour { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; height: 4px; }
+.tricolour span:nth-child(1) { background: var(--lucy); }
+.tricolour span:nth-child(2) { background: var(--logo-red); }
+.tricolour span:nth-child(3) { background: var(--logo-orange); }
+.tricolour span:nth-child(4) { background: var(--logo-green); }
+.header-row { display: flex; align-items: center; gap: 24px; padding-block: 10px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--ink); min-width: 0; }
+.brand img { height: 46px; width: auto; }
+.brand .logo-light { display: var(--logo-light); }
+.brand .logo-dark { display: var(--logo-dark); }
+.brand-text { display: grid; line-height: 1.2; border-left: 1px solid var(--rule); padding-left: 14px; }
+.brand-text strong { font-family: var(--serif); font-weight: 500; font-size: 1.1rem; }
+.brand-text span { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.tabs { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { font: 600 0.95rem/1 var(--sans); color: var(--muted); text-decoration: none; padding: 12px 14px; border-radius: 4px; white-space: nowrap; position: relative; }
+.tab:hover { color: var(--ink); background: var(--placeholder-bg); }
+.tab[aria-current="page"] { color: var(--ink); }
+.tab[aria-current="page"]::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: 4px; height: 2px; background: var(--gold); }
+@media (max-width: 760px) {
+  .brand-text { display: none; }
+  .header-row { gap: 8px; }
+  .tabs { margin-left: 0; width: 100%; }
+  .tab { padding: 10px 10px; font-size: 0.9rem; }
+  .tab[aria-current="page"]::after { left: 10px; right: 10px; }
+}
+
+/* Views */
+main { min-height: 60vh; }
+.view { padding-block: 0 72px; }
+.page-head { padding-block: 56px 32px; display: grid; gap: 14px; }
+.page-head .lede { max-width: var(--measure); color: var(--muted); }
+.section { padding-block: 36px; display: grid; gap: 22px; border-top: 1px solid var(--rule); }
+.section:first-of-type { border-top: 0; }
+.section-head { display: grid; gap: 8px; }
+
+/* Home hero */
+.hero { padding-block: 48px 40px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 48px; align-items: end; }
+.hero-copy { display: grid; gap: 18px; }
+.hero-copy .tagline { font-family: var(--serif); font-style: italic; font-size: 1.15rem; color: var(--muted); }
+.hero-about { display: grid; gap: 14px; font-size: 1.02rem; }
+.hero-about .cta-row { display: flex; gap: 12px; flex-wrap: wrap; padding-top: 6px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 600 0.92rem/1 var(--sans); padding: 12px 18px; border-radius: 4px; text-decoration: none; border: 1px solid var(--lucy); cursor: pointer; }
+.btn-primary { background: var(--lucy); color: var(--on-band); }
+.btn-primary:hover { background: var(--lucy-deep); }
+.btn-ghost { background: transparent; color: var(--link); border-color: var(--rule); }
+.btn-ghost:hover { border-color: var(--link); }
+@media (max-width: 860px) { .hero { grid-template-columns: 1fr; gap: 24px; align-items: start; } }
+
+/* Carousel */
+.band { background: var(--lucy-deep); color: var(--on-band); }
+.band-inner { padding-block: 40px 44px; display: grid; gap: 20px; }
+.band-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; }
+.band-head h2 { color: var(--on-band); }
+.band-head .eyebrow { color: var(--gold-soft); }
+.carousel { position: relative; }
+.slides { position: relative; border-radius: 6px; overflow: hidden; aspect-ratio: 16 / 7; max-width: 100%; background: var(--lucy); }
+@media (max-width: 760px) { .slides { aspect-ratio: auto; min-height: 430px; } }
+.slide { position: absolute; inset: 0; display: grid; opacity: 0; visibility: hidden; transition: opacity .6s ease, visibility .6s; }
+.slide.is-active { opacity: 1; visibility: visible; }
+.slide-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.slide-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,15,42,.92) 0%, rgba(10,15,42,.72) 45%, rgba(10,15,42,.15) 100%); }
+.slide-type { background: radial-gradient(120% 140% at 100% 0%, #2a3d8f 0%, var(--lucy) 45%, #0f1745 100%); }
+.slide-body { position: relative; align-self: end; padding: clamp(22px, 4vw, 44px); display: grid; gap: 12px; max-width: 640px; }
+.slide-body .eyebrow { color: var(--gold-soft); }
+.slide-body h3 { font-family: var(--display); font-weight: 500; font-size: clamp(1.55rem, 3.2vw, 2.35rem); line-height: 1.12; color: var(--on-band); }
+.slide-body p { color: var(--on-band-muted); font-size: 1rem; max-width: 52ch; }
+.slide-body a { color: var(--on-band); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--gold-soft); justify-self: start; padding-bottom: 2px; }
+.slide-dates { position: absolute; right: clamp(22px, 4vw, 44px); top: clamp(22px, 4vw, 44px); display: flex; gap: 10px; }
+.slide-dates .datebox { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.25); }
+@media (max-width: 760px) { .slide-dates { position: relative; right: auto; top: auto; padding: 22px 22px 0; } .slide-type { align-content: space-between; } }
+.carousel-controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.dots { display: flex; gap: 8px; }
+.dot { width: 34px; height: 4px; border: 0; padding: 0; background: rgba(255,255,255,.28); cursor: pointer; border-radius: 2px; }
+.dot[aria-current="true"] { background: var(--gold-soft); }
+.arrow { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.35); background: transparent; color: var(--on-band); cursor: pointer; font-size: 1.1rem; line-height: 1; display: grid; place-items: center; }
+.arrow:hover { background: rgba(255,255,255,.1); }
+.counter { font-size: 0.85rem; color: var(--on-band-muted); font-variant-numeric: tabular-nums; margin-left: auto; }
+
+/* Date box: the term card's own device */
+.datebox { display: grid; justify-items: center; align-content: center; min-width: 74px; padding: 10px 8px; background: var(--lucy); color: var(--on-band); border: 1px solid var(--lucy); border-radius: 3px; line-height: 1; gap: 5px; }
+.datebox b { font-family: var(--display); font-weight: 500; font-size: 2.1rem; }
+.datebox span { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.datebox i { font-style: normal; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: .75; }
+
+/* Home: next up + strip */
+.home-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 860px) { .home-grid { grid-template-columns: 1fr; } }
+.tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 24px; display: grid; gap: 10px; align-content: start; }
+.tile p { color: var(--muted); font-size: 0.98rem; }
+.tile a.more { font-weight: 600; text-decoration: none; margin-top: 4px; }
+
+/* About */
+.two-col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
+@media (max-width: 860px) { .two-col { grid-template-columns: 1fr; gap: 24px; } }
+.quote { font-family: var(--serif); font-style: italic; font-size: 1.15rem; line-height: 1.55; border-left: 2px solid var(--gold); padding-left: 20px; display: grid; gap: 10px; }
+.quote cite { font-style: normal; font-family: var(--sans); font-size: 0.85rem; color: var(--muted); }
+.principles { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; border-top: 2px solid var(--lucy); }
+.principle { padding: 18px 18px 18px 0; display: grid; gap: 8px; align-content: start; }
+.principle + .principle { padding-left: 18px; border-left: 1px solid var(--rule); }
+.principle h3 { font-size: 1.08rem; }
+.principle p { font-size: 0.95rem; color: var(--muted); }
+@media (max-width: 960px) { .principles { grid-template-columns: 1fr; } .principle + .principle { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); } }
+.programmes { display: grid; gap: 0; }
+.programme { display: grid; grid-template-columns: minmax(160px, 240px) minmax(0, 1fr); gap: 24px; padding-block: 16px; border-bottom: 1px solid var(--rule); }
+.programme h3 { font-size: 1.05rem; }
+.programme p { color: var(--muted); }
+@media (max-width: 640px) { .programme { grid-template-columns: 1fr; gap: 6px; } }
+.people { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+@media (max-width: 960px) { .people { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .people { grid-template-columns: 1fr; } }
+.person { display: grid; gap: 10px; align-content: start; }
+.person .portrait { aspect-ratio: 4 / 5; max-width: 100%; border: 1px dashed var(--sky); background: var(--placeholder-bg); border-radius: 4px; display: grid; place-items: center; color: var(--muted); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.person h3 { font-size: 1.05rem; }
+.person p { color: var(--muted); font-size: 0.93rem; line-height: 1.45; }
+.giving { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 960px) { .giving { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .giving { grid-template-columns: 1fr; } }
+.give { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 20px; display: grid; gap: 8px; align-content: start; }
+.give .amount { font-family: var(--display); font-size: 1.7rem; color: var(--lucy); line-height: 1; }
+:root[data-theme="dark"] .give .amount { color: var(--sky); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .give .amount { color: var(--sky); } }
+.give p { color: var(--muted); font-size: 0.95rem; }
+
+/* Placeholder */
+.placeholder { border: 1px dashed var(--sky); background: var(--placeholder-bg); border-radius: 6px; padding: 22px; display: grid; gap: 6px; color: var(--muted); }
+.placeholder strong { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--link); }
+
+/* Events */
+.subtabs { display: flex; gap: 6px; flex-wrap: wrap; padding-bottom: 6px; }
+.subtab { font: 600 0.9rem/1 var(--sans); text-decoration: none; padding: 10px 16px; border: 1px solid var(--rule); border-radius: 999px; color: var(--muted); background: var(--surface); }
+.subtab:hover { color: var(--ink); border-color: var(--sky); }
+.subtab[aria-current="page"] { background: var(--lucy); border-color: var(--lucy); color: var(--on-band); }
+.event { display: grid; grid-template-columns: 86px minmax(0, 1fr); gap: 26px; padding-block: 34px; border-top: 1px solid var(--rule); }
+.event:first-of-type { border-top: 0; }
+@media (max-width: 640px) { .event { grid-template-columns: 1fr; gap: 14px; } .event .datebox { justify-self: start; } }
+.event-body { display: grid; gap: 14px; min-width: 0; }
+.event-body h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 0.93rem; color: var(--muted); }
+.meta b { color: var(--ink); font-weight: 600; }
+.speakers { display: grid; gap: 0; border-top: 1px solid var(--rule); max-width: var(--measure); }
+.speakers li { list-style: none; padding: 10px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr); gap: 16px; font-size: 0.95rem; }
+.speakers li b { font-weight: 600; }
+.speakers li span { color: var(--muted); }
+.speakers li .role { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); grid-column: 1 / -1; margin-bottom: -10px; }
+@media (max-width: 560px) { .speakers li { grid-template-columns: 1fr; gap: 2px; } .speakers li .role { margin-bottom: 0; } }
+ul.speakers { padding: 0; margin: 0; }
+.rsvp { background: var(--surface); border: 1px solid var(--rule); border-left: 3px solid var(--gold); border-radius: 4px; padding: 18px 20px; display: flex; align-items: center; gap: 12px 20px; flex-wrap: wrap; max-width: var(--measure); }
+.rsvp p { font-size: 0.95rem; flex: 1 1 260px; }
+.email { font-family: var(--sans); font-weight: 600; user-select: all; }
+.copy-btn { font: 600 0.85rem/1 var(--sans); padding: 10px 14px; border-radius: 4px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); cursor: pointer; }
+.copy-btn:hover { border-color: var(--link); }
+.series-tag { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); }
+
+/* Gallery */
+.gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.gallery button { padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: 4px; overflow: hidden; aspect-ratio: 4 / 3; max-width: 100%; }
+.gallery button.wide { grid-column: span 2; grid-row: span 2; }
+.gallery img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+.gallery button:hover img { transform: scale(1.03); }
+@media (max-width: 760px) { .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.lightbox { position: fixed; inset: 0; z-index: 50; background: rgba(8,11,30,.92); display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.lightbox[hidden] { display: none; }
+.lightbox img { max-height: 82vh; max-width: 100%; border-radius: 4px; }
+.lightbox figure { margin: 0; display: grid; gap: 10px; justify-items: center; }
+.lightbox figcaption { color: #c6cde6; font-size: 0.92rem; text-align: center; }
+.lightbox .close { position: absolute; top: calc(14px + env(safe-area-inset-top, 0px)); right: calc(14px + env(safe-area-inset-right, 0px)); }
+
+/* Newsletters */
+.issue-list { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; }
+@media (max-width: 860px) { .issue-list { grid-template-columns: 1fr; } }
+.issue { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 24px; display: grid; gap: 14px; align-content: start; }
+.issue.is-open { border-color: var(--lucy); box-shadow: 0 0 0 1px var(--lucy); }
+.issue-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.issue-title { font-family: var(--display); font-weight: 500; font-size: 2rem; line-height: 1; }
+.contents { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 20px; padding: 0; margin: 0; }
+.contents li { list-style: none; padding: 7px 0; border-bottom: 1px solid var(--rule); font-size: 0.92rem; display: grid; }
+.contents li b { font-family: var(--serif); font-weight: 600; font-size: 1.08rem; }
+.contents li span { color: var(--muted); font-size: 0.85rem; }
+@media (max-width: 520px) { .contents { grid-template-columns: 1fr; } }
+
+/* PDF viewer */
+.viewer { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+.viewer-bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--rule); background: var(--paper); flex-wrap: wrap; }
+.viewer-bar .title { font-weight: 600; font-size: 0.92rem; margin-right: auto; min-width: 0; }
+.viewer-bar button { font: 600 0.85rem/1 var(--sans); min-width: 36px; height: 34px; padding: 0 10px; border-radius: 4px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); cursor: pointer; }
+.viewer-bar button:hover { border-color: var(--link); }
+.viewer-bar .zoom { font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 48px; text-align: center; }
+.viewer-pages { height: min(78vh, 980px); overflow: auto; padding: 18px; display: grid; justify-items: center; gap: 16px; background: var(--placeholder-bg); }
+.viewer-pages canvas { box-shadow: 0 1px 2px rgba(10,15,42,.18), 0 6px 20px rgba(10,15,42,.10); background: #fff; max-width: none; }
+.viewer-status { padding: 40px 20px; text-align: center; color: var(--muted); }
+.viewer.is-full { position: fixed; inset: 0; z-index: 60; border-radius: 0; border: 0; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); display: grid; grid-template-rows: auto 1fr; }
+.viewer.is-full .viewer-pages { height: auto; }
+
+/* Footer */
+footer { background: var(--lucy-deep); color: var(--on-band-muted); }
+.footer-inner { padding-block: 40px; display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+.footer-inner img { height: 84px; width: auto; }
+.footer-inner h3 { color: var(--on-band); font-family: var(--serif); font-weight: 500; font-size: 1.15rem; margin-bottom: 6px; }
+.footer-inner p { font-size: 0.92rem; }
+.footer-inner a { color: var(--on-band); }
+.footer-inner .email { color: var(--on-band); }
+.fineprint { border-top: 1px solid rgba(255,255,255,.12); padding-block: 14px; font-size: 0.8rem; }
+@media (max-width: 760px) { .footer-inner { grid-template-columns: 1fr; gap: 20px; } }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+</head>
+<body>
+<header class="site-header">
+  <div class="tricolour" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <div class="wrap header-row">
+    <a class="brand" href="#home" aria-label="CLIFF home">
+      <img class="logo-light" src="img/cliff-logo.png" alt="CLIFF">
+      <img class="logo-dark" src="img/cliff-logo-white.png" alt="CLIFF">
+      <span class="brand-text"><strong>Cambridge Lucy India Futures Forum</strong><span>Lucy Cavendish College</span></span>
+    </a>
+    <nav class="tabs" aria-label="Main">
+      <a class="tab" href="#home" data-tab="home">Home</a>
+      <a class="tab" href="#about" data-tab="about">About us</a>
+      <a class="tab" href="#newsletters" data-tab="newsletters">Newsletters</a>
+      <a class="tab" href="#upcoming" data-tab="events">Events</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- HOME -->
+<section class="view" data-view="home">
+  <div class="wrap hero">
+    <div class="hero-copy">
+      <span class="eyebrow">Lucy Cavendish College, University of Cambridge</span>
+      <h1>Cambridge Lucy India Futures Forum</h1>
+      <p class="tagline">Connecting India and Cambridge through education, research and dialogue.</p>
+    </div>
+    <div class="hero-about">
+      <p>CLIFF is an initiative of Lucy Cavendish College. It was launched on 26 June 2026.</p>
+      <p>The Forum builds a structured platform for engagement between Cambridge, the UK and India. It works through student opportunity, research, partnerships and public dialogue.</p>
+      <p>Every activity serves students and alumni. That includes those of Indian origin, those researching India, and anyone who sees India in their future.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#upcoming">See upcoming events</a>
+        <a class="btn btn-ghost" href="https://forms.gle/Tj5T1TME6xJHd95x5" target="_blank" rel="noopener">Join our mailing list</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="band" aria-roledescription="carousel" aria-label="Latest updates">
+    <div class="wrap band-inner">
+      <div class="band-head">
+        <div class="section-head"><span class="eyebrow">Latest updates</span><h2>News and events</h2></div>
+      </div>
+      <div class="carousel" id="carousel">
+        <div class="slides">
+          <article class="slide slide-type is-active" aria-roledescription="slide" aria-label="1 of 5">
+            <div class="slide-dates" aria-hidden="true"><div class="datebox"><b>5</b><span>Nov</span><i>Thu</i></div></div>
+            <div class="slide-body">
+              <span class="eyebrow">CLIFF Confluence series</span>
+              <h3>CETA: Opportunities and Challenges</h3>
+              <p>A panel on the UK-India trade agreement, with speakers from diplomacy, law, business and investment. Wood-Legh Room, 5:30 pm for a 5:45 pm start.</p>
+              <a href="#upcoming">Event details</a>
+            </div>
+          </article>
+          <article class="slide" aria-roledescription="slide" aria-label="2 of 5">
+            <img class="slide-photo" src="img/programmes.jpg" alt="Printed CLIFF programmes laid out on a table" loading="lazy">
+            <div class="slide-shade"></div>
+            <div class="slide-body">
+              <span class="eyebrow">Newsletter, 15 August 2026</span>
+              <h3>Harness, the first issue</h3>
+              <p>Published on India’s 79th Independence Day. Notes from Professor Bhaskar Vira and Pratik Dattani, an expert view on CETA, and a 1911 letter from a young Nehru.</p>
+              <a href="#newsletters">Read Harness</a>
+            </div>
+          </article>
+          <article class="slide slide-type" aria-roledescription="slide" aria-label="3 of 5">
+            <div class="slide-dates" aria-hidden="true">
+              <div class="datebox"><b>22</b><span>Oct</span></div>
+              <div class="datebox"><b>5</b><span>Nov</span></div>
+              <div class="datebox"><b>27</b><span>Nov</span></div>
+            </div>
+            <div class="slide-body">
+              <span class="eyebrow">Michaelmas Term 2026</span>
+              <h3>Calendar of events</h3>
+              <p>Three events this term, on Himalayan floods, the UK-India trade agreement, and access to cricket.</p>
+              <a href="#term-card">View the term card</a>
+            </div>
+          </article>
+          <article class="slide" aria-roledescription="slide" aria-label="4 of 5">
+            <img class="slide-photo" src="img/room.jpg" alt="The launch venue dressed with marigold garlands, a lamp and a screen" loading="lazy">
+            <div class="slide-shade"></div>
+            <div class="slide-body">
+              <span class="eyebrow">CLIFF Seminar series, 22 October 2026</span>
+              <h3>From Snow to Floods: Understanding Water in the Himalayas</h3>
+              <p>Dr Siddharth Gumber of the British Antarctic Survey spoke on modelling the Himalayan snowfall that leads to floods.</p>
+              <a href="#past">Past events</a>
+            </div>
+          </article>
+          <article class="slide" aria-roledescription="slide" aria-label="5 of 5">
+            <img class="slide-photo" src="img/audience.jpg" alt="A full room of guests at the CLIFF launch" loading="lazy">
+            <div class="slide-shade"></div>
+            <div class="slide-body">
+              <span class="eyebrow">26 June 2026</span>
+              <h3>The launch of CLIFF</h3>
+              <p>CLIFF was launched at Lucy Cavendish College with speakers from across the University and Krea University.</p>
+              <a href="#past">Read about the launch</a>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <button class="arrow" id="prev" aria-label="Previous update">‹</button>
+        <button class="arrow" id="next" aria-label="Next update">›</button>
+        <div class="dots" id="dots" role="group" aria-label="Choose an update"></div>
+        <span class="counter" id="counter">1 / 5</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap" style="padding-block: 48px 0">
+    <div class="home-grid">
+      <div class="tile">
+        <span class="eyebrow">Next event</span>
+        <h3>CETA: Opportunities and Challenges</h3>
+        <p>Thursday 5 November 2026. Wood-Legh Room, Lucy Cavendish College.</p>
+        <a class="more" href="#upcoming">Details and RSVP</a>
+      </div>
+      <div class="tile">
+        <span class="eyebrow">Read</span>
+        <h3>Harness</h3>
+        <p>The CLIFF newsletter. The first issue appeared on 15 August 2026.</p>
+        <a class="more" href="#newsletters">Open the newsletter</a>
+      </div>
+      <div class="tile">
+        <span class="eyebrow">Get involved</span>
+        <h3>Join our mailing list</h3>
+        <p>Hear about CLIFF events and new issues of Harness.</p>
+        <a class="more" href="https://forms.gle/Tj5T1TME6xJHd95x5" target="_blank" rel="noopener">Sign up on Google Forms</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="view" data-view="about" hidden>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="eyebrow">About us</span>
+      <h1>About CLIFF</h1>
+      <p class="lede">The Cambridge Lucy India Futures Forum is an initiative of Lucy Cavendish College, University of Cambridge, launched on 26 June 2026.</p>
+    </div>
+
+    <div class="section">
+      <div class="two-col">
+        <div class="prose">
+          <span class="eyebrow">Mission and vision</span>
+          <p>Lucy Cavendish exists to attract, support and empower students who want to lead change. Its Strategy 2030 asks the College to be bolder, more distinctive and more globally engaged. It names India as a priority.</p>
+          <p>CLIFF is the College’s response. It supports the College’s commitments to social justice, sustainability, global citizenship and transformative education. It creates a structured platform for engagement with stakeholders in Cambridge, the UK, India and beyond.</p>
+          <p>The University has announced the Cambridge-India Centre for Advanced Studies. CLIFF is the first initiative at collegiate level in support of that commitment.</p>
+          <p>The first Indian academic to lead a Cambridge College was a Nobel laureate and Master of Trinity. CLIFF is an initiative of the first Indian practitioner to do so, the College’s 10th President.</p>
+        </div>
+        <div style="display:grid; gap:28px; align-content:start">
+          <blockquote class="quote" style="margin:0">
+            <p>“I am delighted to build on the strong and deep links between Cambridge University and India. The Cambridge-India CAS is an exciting opportunity to form collaborations with the best researchers and innovators in India and strengthen ties with such a rapidly growing knowledge economy.”</p>
+            <cite>Professor Deborah Prentice, Vice-Chancellor, 27 January 2026</cite>
+          </blockquote>
+          <blockquote class="quote" style="margin:0">
+            <p>“By bringing together students, academics, alumni, and partners, CLIFF has the potential to make a significant contribution to the next chapter of the relationship between Cambridge and India.”</p>
+            <cite>Professor Bhaskar Vira FAcSS, Pro-Vice-Chancellor for Education and Environmental Sustainability, in Harness, Issue 1</cite>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><span class="eyebrow">Design principles</span><h2>How CLIFF works</h2></div>
+      <div class="principles">
+        <div class="principle"><h3>Continuity</h3><p>Build on the momentum, relationships and commitments already in place, including the Cambridge-India CAS.</p></div>
+        <div class="principle"><h3>Flexibility</h3><p>Stay structured but not fixed. Adapt as new areas of research, collaboration and funding emerge.</p></div>
+        <div class="principle"><h3>Collaboration</h3><p>Seek reciprocal partnerships across Cambridge, the UK and India, in government, civil society, education and industry.</p></div>
+        <div class="principle"><h3>Student centricity</h3><p>Every activity ultimately serves students and alumni, whatever their nationality or discipline.</p></div>
+        <div class="principle"><h3>Impact</h3><p>Connect academic work with practitioners, policymakers and civil society.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><span class="eyebrow">Programmes</span><h2>Planned programmes</h2></div>
+      <div class="programmes">
+        <div class="programme"><h3>Student Futures</h3><p>Scholarships, mentorship, leadership and entrepreneurship development, career conversations, and routes to internships.</p></div>
+        <div class="programme"><h3>Knowledge Exchange</h3><p>A termly seminar series, visiting fellowships and joint research on governance, climate, AI policy, gender, urbanisation and public health.</p></div>
+        <div class="programme"><h3>Strategic Partnerships</h3><p>Reciprocal collaborations with Indian institutions. Joint seminars, student dialogues and exchanges that move ideas and people both ways.</p></div>
+        <div class="programme"><h3>Public Dialogue</h3><p>An annual CLIFF Lecture, India Futures Roundtables and student research showcases.</p></div>
+        <div class="programme"><h3>Cultural Understanding</h3><p>Music, poetry, visual art and literary programming.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="two-col">
+        <div class="prose">
+          <span class="eyebrow">Why Lucy Cavendish</span>
+          <p>The College’s mission centres on access and inclusion. Its community is interdisciplinary, spanning law, policy, technology, public health, the arts and the social sciences.</p>
+          <p>Indian students are among the College’s largest overseas communities. Key members of its senior leadership are of Indian origin. It already holds partnerships with Indian educational institutions.</p>
+        </div>
+        <div class="prose">
+          <span class="eyebrow">Partners</span>
+          <div class="placeholder">
+            <strong>Placeholder</strong>
+            <p>Partner institutions and logos. Memoranda of understanding with universities and think tanks in India are in preparation. Add partners here once they are announced.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><span class="eyebrow">People</span><h2>The CLIFF team</h2></div>
+      <div class="people">
+        <div class="person"><div class="portrait">Photo</div><h3>Dr Poorna Mysoor</h3><p>Chair, CLIFF. Vice President, Lucy Cavendish College.</p></div>
+        <div class="person"><div class="portrait">Photo</div><h3>Bruno Cotta</h3><p>Vice Chair, CLIFF. Fellow, Lucy Cavendish College.</p></div>
+        <div class="person"><div class="portrait">Photo</div><h3>Girish Menon</h3><p>President, Lucy Cavendish College.</p></div>
+        <div class="person"><div class="portrait">Photo</div><h3>Jo Ryan</h3><p>Development Director, Lucy Cavendish College.</p></div>
+        <div class="person"><div class="portrait">Photo</div><h3>Aditya Prasanna Bhattacharya</h3><p>Research Assistant, CLIFF. PhD candidate, Lucy Cavendish College.</p></div>
+        <div class="person"><div class="portrait">Photo</div><h3>Aaryani Dogra</h3><p>Research Assistant, CLIFF. M.Fin. candidate, University of Cambridge.</p></div>
+      </div>
+      <div class="placeholder">
+        <strong>Placeholder</strong>
+        <p>Portraits, short biographies and any further members of the team or advisory board.</p>
+      </div>
+    </div>
+
+    <div class="section" id="about-support">
+      <div class="section-head">
+        <span class="eyebrow">Support CLIFF</span>
+        <h2>Ways to give</h2>
+        <p class="muted" style="max-width: var(--measure)">Donors can support CLIFF at several levels. Each option can be tailored, and the College is open to other forms of engagement.</p>
+      </div>
+      <div class="giving">
+        <div class="give"><span class="amount">£1k+</span><h3>Student bursaries</h3><p>Help individual students travel between Cambridge and India for research, exchange or internships.</p></div>
+        <div class="give"><span class="amount">£10k+</span><h3>Programme sponsorship</h3><p>Fund a termly seminar series, the annual CLIFF Lecture or the India Futures Roundtables.</p></div>
+        <div class="give"><span class="amount">£100k+</span><h3>Visiting fellowships</h3><p>Host visiting fellows from Indian institutions for sustained collaboration.</p></div>
+        <div class="give"><span class="amount">£1m+</span><h3>Endowed programmes</h3><p>Establish a lasting, named programme in scholarships, research or mentorship.</p></div>
+      </div>
+      <div class="rsvp">
+        <p>For sponsorship, write to Dr Poorna Mysoor and Bruno Cotta at <span class="email">cliff@lucy.cam.ac.uk</span></p>
+        <button class="copy-btn" data-copy="cliff@lucy.cam.ac.uk">Copy email</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTERS -->
+<section class="view" data-view="newsletters" hidden>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="eyebrow">Newsletters</span>
+      <h1>Harness</h1>
+      <p class="lede">The CLIFF newsletter.</p>
+    </div>
+    <div class="issue-list">
+      <article class="issue is-open">
+        <div class="issue-top"><span class="issue-title">Issue 1</span><span class="muted">15 August 2026</span></div>
+        <p>Published on India’s 79th Independence Day. Edited by Dr Poorna Mysoor and Aditya Prasanna Bhattacharya, with help from Saumya Sheth.</p>
+        <ul class="contents">
+          <li><b>Friends of CLIFF</b><span>Professor Bhaskar Vira and Pratik Dattani</span></li>
+          <li><b>Vantage Point</b><span>Brishni Mukhopadhyay on the UK-India CETA</span></li>
+          <li><b>Basecamp</b><span>Dr Ira Chadha-Sridhar on care ethics</span></li>
+          <li><b>Looking Back</b><span>The launch, 26 June 2026</span></li>
+          <li><b>On the Horizon</b><span>What comes next for CLIFF</span></li>
+          <li><b>Strata</b><span>Nehru’s 1911 letter about his hair</span></li>
+          <li><b>Off the Shelf</b><span>Amartya Sen’s memoir</span></li>
+          <li><b>Rope Up</b><span>How to get involved</span></li>
+        </ul>
+      </article>
+      <article class="issue placeholder" style="border-radius:6px">
+        <strong>Placeholder</strong>
+        <div class="issue-top"><span class="issue-title" style="color:var(--muted)">Issue 2</span></div>
+        <p>The next issue of Harness. Add its date, contents and PDF here when it is published.</p>
+      </article>
+    </div>
+    <div style="padding-top: 28px">
+      <div class="viewer" data-pdf="pdf/harness-issue-1.pdf" data-label="Harness, Issue 1 (15 August 2026)"></div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS: UPCOMING -->
+<section class="view" data-view="upcoming" hidden>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="eyebrow">Events</span>
+      <h1>Upcoming events</h1>
+      <nav class="subtabs" aria-label="Events">
+        <a class="subtab" href="#upcoming" aria-current="page">Upcoming</a>
+        <a class="subtab" href="#past">Past</a>
+        <a class="subtab" href="#term-card">Term card</a>
+      </nav>
+    </div>
+
+    <article class="event">
+      <div class="datebox"><b>5</b><span>Nov</span><i>Thu</i></div>
+      <div class="event-body">
+        <span class="series-tag">CLIFF Confluence series: Launch panel</span>
+        <h2>Comprehensive Economic and Trade Agreement (CETA): Opportunities and Challenges</h2>
+        <div class="meta"><span><b>Thursday 5 November 2026</b></span><span>5:30 pm for a 5:45 pm start</span><span>Wood-Legh Room, Lucy Cavendish College</span></div>
+        <div class="prose">
+          <p>The UK and India signed CETA in July 2025. It came into force on 15 July 2026, less than three weeks after CLIFF itself was launched.</p>
+          <p>It is the UK’s most significant bilateral trade deal since Brexit. It is India’s most comprehensive agreement with a G7 economy. It sets a target of $100 billion in bilateral trade by 2030.</p>
+          <p>With the agreement in force, the focus moves to implementation. This panel launches CLIFF’s Confluence series. It brings together diplomatic, legal, business and investment views on what CETA means for both countries.</p>
+        </div>
+        <ul class="speakers">
+          <li><span class="role">Diplomacy</span><b>Ms Nidhi Mani Tripathi IAS</b><span>Minister (Economic), High Commission of India, London</span></li>
+          <li><span class="role">Law</span><b>Mr Abhijit Mukhopadhyay</b><span>President (Legal) and General Counsel, Hinduja Group</span></li>
+          <li><span class="role">Business</span><b>Mr Sam Tully</b><span>Visiting Fellow, Centre for India and Global Business, Judge Business School</span></li>
+          <li><span class="role">Investment</span><b>Mr Pratik Dattani</b><span>Managing Director, EPG Consulting, and Founder, Bridge India</span></li>
+          <li><span class="role">Chair</span><b>Mr Brishni Mukhopadhyay</b><span>Head of Sustainable Investing, Western Asset Management</span></li>
+        </ul>
+        <div class="rsvp">
+          <p>To attend, email <span class="email">cliff@lucy.cam.ac.uk</span> with the events you plan to join.</p>
+          <button class="copy-btn" data-copy="cliff@lucy.cam.ac.uk">Copy email</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="event">
+      <div class="datebox"><b>27</b><span>Nov</span><i>Fri</i></div>
+      <div class="event-body">
+        <span class="series-tag">CLIFF Seminar series</span>
+        <h2>Law, Sport and Social Justice: Lessons in Cricket from India, South Africa, and the UK</h2>
+        <div class="meta"><span><b>Friday 27 November 2026</b></span><span>5:30 pm for a 5:45 pm start</span><span>Wolfson Room, Lucy Cavendish College</span></div>
+        <div class="prose">
+          <p>This seminar draws on fieldwork in India and expert consultations in South Africa and the UK.</p>
+          <p>It examines how socio-economic, identity-based and systemic factors shape access to the sport, and what legal reform can and cannot change.</p>
+          <p>The seminar closes CLIFF’s Michaelmas Term programme.</p>
+        </div>
+        <ul class="speakers">
+          <li><span class="role">Speaker</span><b>Shubham Jain</b><span>Faculty of Law, University of Cambridge, and Research Fellow, Centre for Sport and Human Rights</span></li>
+        </ul>
+        <div class="rsvp">
+          <p>To attend, email <span class="email">cliff@lucy.cam.ac.uk</span> with the events you plan to join.</p>
+          <button class="copy-btn" data-copy="cliff@lucy.cam.ac.uk">Copy email</button>
+        </div>
+      </div>
+    </article>
+
+    <div class="placeholder" style="margin-top: 12px">
+      <strong>Placeholder</strong>
+      <p>Lent Term 2027 events. Add them here once the next term card is set.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS: PAST -->
+<section class="view" data-view="past" hidden>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="eyebrow">Events</span>
+      <h1>Past events</h1>
+      <nav class="subtabs" aria-label="Events">
+        <a class="subtab" href="#upcoming">Upcoming</a>
+        <a class="subtab" href="#past" aria-current="page">Past</a>
+        <a class="subtab" href="#term-card">Term card</a>
+      </nav>
+    </div>
+
+    <article class="event">
+      <div class="datebox"><b>22</b><span>Oct</span><i>Thu</i></div>
+      <div class="event-body">
+        <span class="series-tag">CLIFF Seminar series</span>
+        <h2>From Snow to Floods: Understanding Water in the Himalayas</h2>
+        <div class="meta"><span><b>Thursday 22 October 2026</b></span><span>Wood-Legh Room, Lucy Cavendish College</span></div>
+        <div class="prose">
+          <p>The first event of CLIFF’s first full term came in the wake of recent floods in Nepal.</p>
+          <p>Dr Siddharth Gumber, Postdoctoral Researcher and Mountain Climate Modeller at the British Antarctic Survey, spoke on predicting the Himalayan snowfall that leads to floods. The talk combined field observations from India with modelling expertise from Cambridge and the UK.</p>
+        </div>
+        <div class="placeholder">
+          <strong>Placeholder</strong>
+          <p>Event report, key points from the discussion, and photographs.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="event">
+      <div class="datebox"><b>26</b><span>Jun</span><i>Fri</i></div>
+      <div class="event-body">
+        <span class="series-tag">The launch</span>
+        <h2>Launch of the Cambridge Lucy India Futures Forum</h2>
+        <div class="meta"><span><b>Friday 26 June 2026</b></span><span>Lucy Cavendish College</span></div>
+        <div class="prose">
+          <p>Dr Poorna Mysoor, Vice President of the College and Chair of CLIFF, lit the lamp. College President Girish Menon welcomed guests from across the University and beyond.</p>
+          <p>Bruno Cotta, Vice Chair, set out why India matters to Cambridge now. Student volunteers Aditya Prasanna Bhattacharya and Aaryani Dogra presented CLIFF’s design principles and planned activities. Jo Ryan, Development Director, explained how the College means to act on them.</p>
+          <p>Professor Jaideep Prabhu, Jawaharlal Nehru Professor of Indian Business and Enterprise at the Judge Business School, spoke on fitting CLIFF into the India-facing work already under way across the University. Jeeves Rohilla, President (PG) of the Students’ Union, made the case for student centricity. Shiraz Vira shared lessons from running exchange programmes between the UK and India. Professor Nirmala Rao OBE, Vice Chancellor of Krea University, spoke on the lead Lucy Cavendish had taken.</p>
+          <p>The afternoon closed with a reading from Nehru’s <i>The Discovery of India</i>, a recital of Tagore’s <i>Shobujer Obhijaan</i>, and a performance by the Cambridge University Indian Classical Music Society.</p>
+          <p>Guests included students from Trinity, Sidney Sussex, Christ’s, St Edmund’s and Murray Edwards, and from the Judge Business School, the Faculty of Law, and the Departments of Engineering, Mathematics and Physics.</p>
+        </div>
+        <div class="gallery" id="gallery">
+          <button class="wide" data-cap="The launch audience"><img src="img/audience.jpg" alt="The launch audience seated in rows" loading="lazy"></button>
+          <button data-cap="The venue before the launch"><img src="img/room.jpg" alt="The venue with marigold garlands, a brass lamp and a screen" loading="lazy"></button>
+          <button data-cap="Remarks from the lectern"><img src="img/speaker-1.jpg" alt="A speaker at the lectern beside the CLIFF banner" loading="lazy"></button>
+          <button data-cap="A speaker joining by video"><img src="img/remote-address.jpg" alt="The audience watching a speaker on screen" loading="lazy"></button>
+          <button data-cap="Remarks from the lectern"><img src="img/speaker-2.jpg" alt="A speaker at the lectern beside the CLIFF banner" loading="lazy"></button>
+          <button data-cap="Remarks from the lectern"><img src="img/speaker-3.jpg" alt="A speaker with a microphone beside the CLIFF banner" loading="lazy"></button>
+          <button data-cap="A musical medley"><img src="img/recital.jpg" alt="A performer at a keyboard and a singer beside a screen" loading="lazy"></button>
+          <button data-cap="Music at the launch"><img src="img/music.jpg" alt="A musician at a keyboard behind a lit brass lamp" loading="lazy"></button>
+          <button data-cap="Conversation after the event"><img src="img/conversation.jpg" alt="Guests in conversation after the event" loading="lazy"></button>
+          <button data-cap="The launch programme"><img src="img/programmes.jpg" alt="Printed CLIFF programmes" loading="lazy"></button>
+          <button data-cap="A full room"><img src="img/audience-wide.jpg" alt="The full room seen from the back" loading="lazy"></button>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- EVENTS: TERM CARD -->
+<section class="view" data-view="term-card" hidden>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="eyebrow">Events</span>
+      <h1>Michaelmas Term 2026</h1>
+      <nav class="subtabs" aria-label="Events">
+        <a class="subtab" href="#upcoming">Upcoming</a>
+        <a class="subtab" href="#past">Past</a>
+        <a class="subtab" href="#term-card" aria-current="page">Term card</a>
+      </nav>
+    </div>
+    <div style="display:grid; gap:20px">
+      <div class="rsvp">
+        <p>To RSVP, email <span class="email">cliff@lucy.cam.ac.uk</span> with the events you plan to attend.</p>
+        <button class="copy-btn" data-copy="cliff@lucy.cam.ac.uk">Copy email</button>
+      </div>
+      <div class="viewer" data-pdf="pdf/term-card-michaelmas-2026.pdf" data-label="Term card, Michaelmas 2026"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <img src="img/crest.png" alt="Lucy Cavendish College crest">
+    <div>
+      <h3>Cambridge Lucy India Futures Forum</h3>
+      <p>Lucy Cavendish College, University of Cambridge<br>Lady Margaret Road, Cambridge CB3 0BU</p>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <p><span class="email">cliff@lucy.cam.ac.uk</span></p>
+      <p><a href="https://forms.gle/Tj5T1TME6xJHd95x5" target="_blank" rel="noopener">Join our mailing list</a></p>
+      <p>Instagram: <a href="https://www.instagram.com/lucycavendishcollege/" target="_blank" rel="noopener">@lucycavendishcollege</a><br>LinkedIn: Lucy Cavendish College</p>
+    </div>
+  </div>
+  <div class="wrap fineprint">© 2026 Lucy Cavendish College, University of Cambridge</div>
+</footer>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photograph">
+  <button class="arrow close" id="lb-close" aria-label="Close">×</button>
+  <figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+(function () {
+  /* Routing */
+  var VIEWS = ['home', 'about', 'newsletters', 'upcoming', 'past', 'term-card'];
+  var EVENTS = ['upcoming', 'past', 'term-card'];
+  var ALIAS = { 'events': 'upcoming', 'about-support': 'about' };
+  function route() {
+    var h = (location.hash || '').replace('#', '');
+    var target = h === 'about-support' ? 'about-support' : null;
+    var v = ALIAS[h] || h;
+    if (VIEWS.indexOf(v) < 0) v = 'home';
+    document.querySelectorAll('.view').forEach(function (s) { s.hidden = s.dataset.view !== v; });
+    var tabKey = EVENTS.indexOf(v) >= 0 ? 'events' : v;
+    document.querySelectorAll('.tab').forEach(function (t) {
+      if (t.dataset.tab === tabKey) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
+    });
+    if (target) { var el = document.getElementById(target); if (el) { el.scrollIntoView(); return; } }
+    window.scrollTo(0, 0);
+    document.querySelectorAll('.view:not([hidden]) .viewer').forEach(initViewer);
+  }
+  window.addEventListener('hashchange', route);
+
+  /* Carousel */
+  var slides = Array.prototype.slice.call(document.querySelectorAll('#carousel .slide'));
+  var dotsEl = document.getElementById('dots');
+  var counter = document.getElementById('counter');
+  var idx = 0, timer = null;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  slides.forEach(function (s, i) {
+    var b = document.createElement('button');
+    b.className = 'dot'; b.setAttribute('aria-label', 'Update ' + (i + 1));
+    b.addEventListener('click', function () { go(i); restart(); });
+    dotsEl.appendChild(b);
+  });
+  function go(i) {
+    idx = (i + slides.length) % slides.length;
+    slides.forEach(function (s, j) {
+      s.classList.toggle('is-active', j === idx);
+      s.setAttribute('aria-hidden', j === idx ? 'false' : 'true');
+      s.querySelectorAll('a').forEach(function (a) { a.tabIndex = j === idx ? 0 : -1; });
+    });
+    dotsEl.querySelectorAll('.dot').forEach(function (d, j) { d.setAttribute('aria-current', j === idx ? 'true' : 'false'); });
+    counter.textContent = (idx + 1) + ' / ' + slides.length;
+  }
+  function restart() { if (reduce) return; clearInterval(timer); timer = setInterval(function () { go(idx + 1); }, 7000); }
+  document.getElementById('prev').addEventListener('click', function () { go(idx - 1); restart(); });
+  document.getElementById('next').addEventListener('click', function () { go(idx + 1); restart(); });
+  var car = document.getElementById('carousel');
+  car.addEventListener('mouseenter', function () { clearInterval(timer); });
+  car.addEventListener('mouseleave', restart);
+  car.addEventListener('focusin', function () { clearInterval(timer); });
+  car.addEventListener('focusout', restart);
+  var tx = null;
+  car.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
+  car.addEventListener('touchend', function (e) { if (tx === null) return; var dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 40) { go(idx + (dx < 0 ? 1 : -1)); restart(); } tx = null; });
+  go(0); restart();
+
+  /* Copy email */
+  document.querySelectorAll('[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.dataset.copy, orig = btn.textContent;
+      function done(ok) { btn.textContent = ok ? 'Copied' : 'Select and copy'; setTimeout(function () { btn.textContent = orig; }, 1800); }
+      try {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { selectNear(btn); done(false); });
+      } catch (e) { selectNear(btn); done(false); }
+    });
+  });
+  function selectNear(btn) {
+    var em = btn.parentElement.querySelector('.email'); if (!em) return;
+    var r = document.createRange(); r.selectNodeContents(em); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
+
+  /* Lightbox */
+  var lb = document.getElementById('lightbox'), lbImg = document.getElementById('lb-img'), lbCap = document.getElementById('lb-cap');
+  document.querySelectorAll('#gallery button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var im = b.querySelector('img'); lbImg.src = im.src; lbImg.alt = im.alt; lbCap.textContent = b.dataset.cap || '';
+      lb.hidden = false; document.getElementById('lb-close').focus();
+    });
+  });
+  function closeLb() { lb.hidden = true; }
+  document.getElementById('lb-close').addEventListener('click', closeLb);
+  lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeLb(); document.querySelectorAll('.viewer.is-full').forEach(function (v) { v.classList.remove('is-full'); }); } });
+
+  /* PDF viewer */
+  var lib = window.pdfjsLib;
+  if (lib) {
+    try {
+      var src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      lib.GlobalWorkerOptions.workerSrc = src;
+      var blob = new Blob(["importScripts('" + src + "');"], { type: 'application/javascript' });
+      lib.GlobalWorkerOptions.workerPort = new Worker(URL.createObjectURL(blob));
+    } catch (e) { /* falls back to workerSrc */ }
+  }
+  function initViewer(el) {
+    if (el.dataset.ready) return; el.dataset.ready = '1';
+    el.innerHTML =
+      '<div class="viewer-bar"><span class="title"></span>' +
+      '<span class="zoom pageinfo">Loading</span>' +
+      '<button class="zout" aria-label="Zoom out">−</button><span class="zoom zval">Fit</span>' +
+      '<button class="zin" aria-label="Zoom in">+</button>' +
+      '<button class="fit">Fit width</button><button class="full">Full screen</button></div>' +
+      '<div class="viewer-pages"><div class="viewer-status">Loading document</div></div>';
+    el.querySelector('.title').textContent = el.dataset.label;
+    var pagesEl = el.querySelector('.viewer-pages'), info = el.querySelector('.pageinfo'), zval = el.querySelector('.zval');
+    if (!lib) { pagesEl.innerHTML = '<div class="viewer-status">The document viewer could not load. Please refresh the page.</div>'; return; }
+    var doc = null, scale = null, rendered = {}, canvases = [];
+    function fitScale(page) {
+      var w = pagesEl.clientWidth - 36; var vp = page.getViewport({ scale: 1 });
+      return Math.max(0.3, Math.min(w / vp.width, 2));
+    }
+    function layout() {
+      pagesEl.innerHTML = ''; rendered = {}; canvases = [];
+      doc.getPage(1).then(function (p1) {
+        var s = scale || fitScale(p1);
+        zval.textContent = scale ? Math.round(scale * 100) + '%' : 'Fit';
+        for (var i = 1; i <= doc.numPages; i++) {
+          var c = document.createElement('canvas'); c.dataset.page = i;
+          var vp = p1.getViewport({ scale: s });
+          c.style.width = Math.floor(vp.width) + 'px'; c.style.height = Math.floor(vp.height) + 'px';
+          c.setAttribute('aria-label', 'Page ' + i + ' of ' + doc.numPages); c.setAttribute('role', 'img');
+          pagesEl.appendChild(c); canvases.push(c);
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) draw(+en.target.dataset.page, s); });
+        }, { root: pagesEl, rootMargin: '600px 0px' });
+        canvases.forEach(function (c) { io.observe(c); });
+        draw(1, s); if (doc.numPages > 1) draw(2, s);
+      });
+    }
+    function draw(n, s) {
+      if (rendered[n]) return; rendered[n] = true;
+      doc.getPage(n).then(function (page) {
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var vp = page.getViewport({ scale: s });
+        var c = canvases[n - 1]; if (!c) return;
+        c.width = Math.floor(vp.width * dpr); c.height = Math.floor(vp.height * dpr);
+        c.style.width = Math.floor(vp.width) + 'px'; c.style.height = Math.floor(vp.height) + 'px';
+        page.render({ canvasContext: c.getContext('2d'), viewport: vp, transform: dpr !== 1 ? [dpr, 0, 0, dpr, 0, 0] : null });
+      });
+    }
+    pagesEl.addEventListener('scroll', function () {
+      if (!canvases.length) return;
+      var top = pagesEl.scrollTop + 40, cur = 1;
+      canvases.forEach(function (c) { if (c.offsetTop <= top) cur = +c.dataset.page; });
+      info.textContent = 'Page ' + cur + ' of ' + doc.numPages;
+    }, { passive: true });
+    el.querySelector('.zin').addEventListener('click', function () { doc && doc.getPage(1).then(function (p) { scale = Math.min((scale || fitScale(p)) * 1.2, 3); layout(); }); });
+    el.querySelector('.zout').addEventListener('click', function () { doc && doc.getPage(1).then(function (p) { scale = Math.max((scale || fitScale(p)) / 1.2, 0.3); layout(); }); });
+    el.querySelector('.fit').addEventListener('click', function () { scale = null; doc && layout(); });
+    el.querySelector('.full').addEventListener('click', function () {
+      var on = el.classList.toggle('is-full'); this.textContent = on ? 'Exit full screen' : 'Full screen'; scale = null; if (doc) setTimeout(layout, 30);
+    });
+    var rt; window.addEventListener('resize', function () { if (!doc || scale) return; clearTimeout(rt); rt = setTimeout(layout, 200); });
+    lib.getDocument({ url: el.dataset.pdf }).promise.then(function (d) {
+      doc = d; info.textContent = 'Page 1 of ' + d.numPages; layout();
+    }).catch(function () {
+      pagesEl.innerHTML = '<div class="viewer-status">The document could not be displayed. Please refresh the page.</div>';
+    });
+  }
+
+  route();
+})();
+</script>
+
+</body>
+</html>
